@@ -1,7 +1,7 @@
 version: '3'
 services:
   registry:
-    image: ghcr.io/viniciusbrg/teateastore-registry
+    image: ghcr.io/viniciusbrg/teastore-otel/teastore-registry
     expose:
       - "8080"
     environment:
@@ -11,13 +11,13 @@ services:
     depends_on:
       - collector
   db:
-    image: ghcr.io/viniciusbrg/teateastore-db
+    image: ghcr.io/viniciusbrg/teastore-otel/teastore-db
     expose:
       - "3306"
     ports:
       - "3306:3306"
   persistence:
-    image: ghcr.io/viniciusbrg/teateastore-persistence
+    image: ghcr.io/viniciusbrg/teastore-otel/teastore-persistence
     expose:
       - "8080"
     environment:
@@ -31,7 +31,7 @@ services:
     depends_on:
       - collector
   auth:
-    image: ghcr.io/viniciusbrg/teateastore-auth
+    image: ghcr.io/viniciusbrg/teastore-otel/teastore-auth
     expose:
       - "8080"
     environment:
@@ -43,7 +43,7 @@ services:
     depends_on:
       - collector
   image:
-    image: ghcr.io/viniciusbrg/teateastore-image
+    image: ghcr.io/viniciusbrg/teastore-otel/teastore-image
     expose:
       - "8080"
     environment:
@@ -55,7 +55,7 @@ services:
     depends_on:
       - collector
   recommender:
-    image: ghcr.io/viniciusbrg/teateastore-recommender
+    image: ghcr.io/viniciusbrg/teastore-otel/teastore-recommender
     expose:
       - "8080"
     environment:
@@ -67,7 +67,7 @@ services:
     depends_on:
       - collector
   webui:
-    image: ghcr.io/viniciusbrg/teateastore-webui
+    image: ghcr.io/viniciusbrg/teastore-otel/teastore-webui
     expose:
       - "8080"
     environment:

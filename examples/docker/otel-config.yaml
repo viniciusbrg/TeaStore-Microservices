@@ -1,0 +1,54 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+  filelog:
+    include: [/var/log/*.log]
+
+processors:
+  filter:
+    metrics:
+      exclude:
+        match_type: strict
+        metric_names:
+          - queueSize
+
+  attributes:
+    actions:
+      - action: insert
+        key: log_file_name
+        from_attribute: log.file.name
+      - action: insert
+        key: loki.attribute.labels
+        value: log_file_name
+
+exporters:
+  logging:
+    verbosity: normal
+
+  zipkin:
+    endpoint: http://zipkin:9411/api/v2/spans
+
+  prometheus:
+    endpoint: 0.0.0.0:8889
+    resource_to_telemetry_conversion:
+      enabled: true
+
+  loki:
+    endpoint: http://loki:3100/loki/api/v1/push
+
+service:
+  pipelines:
+    metrics:
+      receivers: [otlp]
+      processors: [filter]
+      exporters: [prometheus]
+    traces:
+      receivers: [otlp]
+      exporters: [zipkin]
+    logs:
+      receivers: [otlp, filelog]
+      processors: [attributes]
+      exporters: [loki]
