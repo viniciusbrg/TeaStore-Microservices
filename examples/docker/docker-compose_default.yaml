@@ -1,17 +1,23 @@
 version: '3'
 services:
   registry:
-    image: descartesresearch/teastore-registry
+    image: ghcr.io/viniciusbrg/teateastore-registry
     expose:
       - "8080"
+    environment:
+      OTEL_SERVICE_NAME: "teastore-registry"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://collector:4317"
+      OTEL_LOGS_EXPORTER: "otlp"
+    depends_on:
+      - collector
   db:
-    image: descartesresearch/teastore-db
+    image: ghcr.io/viniciusbrg/teateastore-db
     expose:
       - "3306"
     ports:
       - "3306:3306"
   persistence:
-    image: descartesresearch/teastore-persistence
+    image: ghcr.io/viniciusbrg/teateastore-persistence
     expose:
       - "8080"
     environment:
@@ -19,33 +25,100 @@ services:
       REGISTRY_HOST: "registry"
       DB_HOST: "db"
       DB_PORT: "3306"
+      OTEL_SERVICE_NAME: "teastore-persistence"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://collector:4317"
+      OTEL_LOGS_EXPORTER: "otlp"
+    depends_on:
+      - collector
   auth:
-    image: descartesresearch/teastore-auth
+    image: ghcr.io/viniciusbrg/teateastore-auth
     expose:
       - "8080"
     environment:
       HOST_NAME: "auth"
       REGISTRY_HOST: "registry"
+      OTEL_SERVICE_NAME: "teastore-auth"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://collector:4317"
+      OTEL_LOGS_EXPORTER: "otlp"
+    depends_on:
+      - collector
   image:
-    image: descartesresearch/teastore-image
+    image: ghcr.io/viniciusbrg/teateastore-image
     expose:
       - "8080"
     environment:
       HOST_NAME: "image"
       REGISTRY_HOST: "registry"
+      OTEL_SERVICE_NAME: "teastore-image"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://collector:4317"
+      OTEL_LOGS_EXPORTER: "otlp"
+    depends_on:
+      - collector
   recommender:
-    image: descartesresearch/teastore-recommender
+    image: ghcr.io/viniciusbrg/teateastore-recommender
     expose:
       - "8080"
     environment:
       HOST_NAME: "recommender"
       REGISTRY_HOST: "registry"
+      OTEL_SERVICE_NAME: "teastore-recommender"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://collector:4317"
+      OTEL_LOGS_EXPORTER: "otlp"
+    depends_on:
+      - collector
   webui:
-    image: descartesresearch/teastore-webui
+    image: ghcr.io/viniciusbrg/teateastore-webui
     expose:
       - "8080"
     environment:
       HOST_NAME: "webui"
       REGISTRY_HOST: "registry"
+      OTEL_SERVICE_NAME: "teastore-webui"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://collector:4317"
+      OTEL_LOGS_EXPORTER: "otlp"
     ports:
       - "8080:8080"
+    depends_on:
+      - collector
+  collector:
+    image: otel/opentelemetry-collector-contrib:0.72.0
+    volumes:
+      - ./otel-config.yaml:/otel-config.yaml
+    command: [ "--config=/otel-config.yaml" ]
+    expose:
+      - "8889" # Prometheus exporter metrics
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+      - "8888"
+      - "8889"
+
+  zipkin:
+    image: openzipkin/zipkin:latest
+    ports:
+      - "9411:9411"
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--web.enable-admin-api"
+    ports:
+      - "9090:9090"
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      - "GF_AUTH_DISABLE_LOGIN_FORM=true"
+      - "GF_AUTH_ANONYMOUS_ENABLED=true"
+      - "GF_AUTH_ANONYMOUS_ORG_ROLE=Admin"
+    ports:
+      - "3000:3000"
