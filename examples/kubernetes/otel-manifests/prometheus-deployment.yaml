@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - args:
-            - --config.file=/etc/prometheus/prometheus.yml
+            - --config.file=/etc/prometheus/prometheus-config.yml
             - --web.enable-admin-api
           image: prom/prometheus
           name: prometheus
@@ -38,11 +38,12 @@ spec:
               protocol: TCP
           resources: {}
           volumeMounts:
-            - mountPath: /etc/prometheus/prometheus.yml
-              name: prometheus-hostpath0
+            - name: prometheus-config-volume
+              mountPath: /etc/prometheus/prometheus-config.yml
+              subPath: config.yaml
       restartPolicy: Always
       volumes:
-        - hostPath:
-            path: /home/ubuntu/TeaStore-Microservices/examples/docker/k8s/prometheus.yml
-          name: prometheus-hostpath0
+        - name: prometheus-config-volume
+          configMap:
+            name: prometheus-config
 status: {}

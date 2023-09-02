@@ -44,11 +44,12 @@ spec:
               protocol: TCP
           resources: {}
           volumeMounts:
-            - mountPath: /otel-config.yaml
-              name: collector-hostpath0
+            - name: config-volume
+              mountPath: /otel-config.yaml
+              subPath: config.yaml
       restartPolicy: Always
       volumes:
-        - hostPath:
-            path: /home/ubuntu/TeaStore-Microservices/examples/docker/k8s/otel-config.yaml
-          name: collector-hostpath0
+        - name: config-volume
+          configMap:
+            name: otel-collector-config
 status: {}
