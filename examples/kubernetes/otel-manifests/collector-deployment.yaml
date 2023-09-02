@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: ./kompose convert --volumes hostPath -f docker-compose_default.yaml
+    kompose.version: 1.30.0 (9d8dcb518)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: collector
+  name: collector
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: collector
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: ./kompose convert --volumes hostPath -f docker-compose_default.yaml
+        kompose.version: 1.30.0 (9d8dcb518)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/k8s-default: "true"
+        io.kompose.service: collector
+    spec:
+      containers:
+        - args:
+            - --config=/otel-config.yaml
+          image: otel/opentelemetry-collector-contrib:0.72.0
+          name: collector
+          ports:
+            - containerPort: 4317
+              hostPort: 4317
+              protocol: TCP
+            - containerPort: 4318
+              hostPort: 4318
+              protocol: TCP
+            - containerPort: 8888
+              protocol: TCP
+            - containerPort: 8889
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /otel-config.yaml
+              name: collector-hostpath0
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: /home/ubuntu/TeaStore-Microservices/examples/docker/k8s/otel-config.yaml
+          name: collector-hostpath0
+status: {}
