@@ -10,10 +10,12 @@ metadata:
   name: zipkin
   namespace: default
 spec:
+  type: NodePort
   ports:
     - name: "9411"
       port: 9411
       targetPort: 9411
+      nodePort: 32200
   selector:
     io.kompose.service: zipkin
 status:

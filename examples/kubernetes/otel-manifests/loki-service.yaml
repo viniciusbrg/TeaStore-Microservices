@@ -10,10 +10,12 @@ metadata:
   name: loki
   namespace: default
 spec:
+  type: NodePort
   ports:
     - name: "3100"
       port: 3100
       targetPort: 3100
+      nodePort: 32202
   selector:
     io.kompose.service: loki
 status:
