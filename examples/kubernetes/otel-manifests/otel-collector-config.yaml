@@ -5,6 +5,24 @@ metadata:
 data:
   config.yaml: |
     receivers:
+      hostmetrics:
+        root_path: /hostfs
+        collection_interval: 5s
+        scrapers:
+          load:
+          disk:
+          filesystem:
+          memory:
+          network:
+          paging:
+    
+      mysql:
+        endpoint: db:3306
+        username: root
+        password: root
+        database: teadb
+        collection_interval: 10s
+    
       otlp:
         protocols:
           grpc:
@@ -32,28 +50,30 @@ data:
     
     exporters:
       logging:
-        verbosity: normal
+        verbosity: detailed
     
       zipkin:
         endpoint: http://zipkin:9411/api/v2/spans
     
-      prometheus:
-        endpoint: 0.0.0.0:8889
-        resource_to_telemetry_conversion:
-          enabled: true
+      jaeger:
+        endpoint: jaeger:14250
+        tls:
+          insecure: true
     
       loki:
         endpoint: http://loki:3100/loki/api/v1/push
     
+      prometheus:
+        endpoint: "0.0.0.0:8889"
+    
     service:
       pipelines:
         metrics:
-          receivers: [otlp]
-          processors: [filter]
-          exporters: [prometheus]
+          receivers: [mysql]
+          exporters: [logging]
         traces:
           receivers: [otlp]
-          exporters: [zipkin]
+          exporters: [zipkin, jaeger]
         logs:
           receivers: [otlp, filelog]
           processors: [attributes]
