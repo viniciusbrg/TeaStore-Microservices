@@ -1,0 +1,56 @@
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+  EKSTeastore:
+    Type: 'AWS::EKS::Cluster'
+    Properties:
+      Name: teastore-cluster
+      RoleArn: arn:aws:iam::594411245622:role/LabRole
+      ResourcesVpcConfig:
+        SubnetIds:
+          - subnet-046503977e6ef5a5b
+          - subnet-06e0b229c77329004
+          - subnet-0b0e0e4bd8cb00937
+          - subnet-0e0c19a63f9406020
+  EKSTeastoreNodegroup:
+    Type: 'AWS::EKS::Nodegroup'
+    Properties:
+      AmiType: AL2_x86_64
+      CapacityType: ON_DEMAND
+      ClusterName: teastore-cluster
+      InstanceTypes:
+        - c4.xlarge
+      NodegroupName: teastoreclusternodegroup
+      NodeRole: arn:aws:iam::594411245622:role/LabRole
+      Subnets:
+        - subnet-046503977e6ef5a5b
+        - subnet-06e0b229c77329004
+        - subnet-0b0e0e4bd8cb00937
+        - subnet-0e0c19a63f9406020
+    DependsOn: EKSTeastore
+  EKSLoadTest:
+    Type: 'AWS::EKS::Cluster'
+    Properties:
+      Name: teastore-loadtester
+      RoleArn: arn:aws:iam::594411245622:role/LabRole
+      ResourcesVpcConfig:
+        SubnetIds:
+          - subnet-046503977e6ef5a5b
+          - subnet-06e0b229c77329004
+          - subnet-0b0e0e4bd8cb00937
+          - subnet-0e0c19a63f9406020
+  EKSLoadTestNodegroup:
+    Type: 'AWS::EKS::Nodegroup'
+    Properties:
+      AmiType: AL2_x86_64
+      CapacityType: ON_DEMAND
+      ClusterName: teastore-loadtester
+      InstanceTypes:
+        - t3.medium
+      NodegroupName: teastoreloadtesternodegroup
+      NodeRole: arn:aws:iam::594411245622:role/LabRole
+      Subnets:
+        - subnet-046503977e6ef5a5b
+        - subnet-06e0b229c77329004
+        - subnet-0b0e0e4bd8cb00937
+        - subnet-0e0c19a63f9406020
+    DependsOn: EKSLoadTest
