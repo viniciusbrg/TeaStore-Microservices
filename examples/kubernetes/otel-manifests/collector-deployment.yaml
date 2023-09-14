@@ -53,9 +53,14 @@ spec:
             - name: config-volume
               mountPath: /otel-config.yaml
               subPath: config.yaml
+            - mountPath: /hostfs
+              name: test-volume
       restartPolicy: Always
       volumes:
         - name: config-volume
           configMap:
             name: otel-collector-config
+        - name: test-volume
+          hostPath:
+            path: /
 status: {}
