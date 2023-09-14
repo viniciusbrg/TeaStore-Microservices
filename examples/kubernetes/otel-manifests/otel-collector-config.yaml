@@ -69,8 +69,8 @@ data:
     service:
       pipelines:
         metrics:
-          receivers: [mysql]
-          exporters: [logging]
+          receivers: [hostmetrics, otlp, mysql]
+          exporters: [prometheus]
         traces:
           receivers: [otlp]
           exporters: [zipkin, jaeger]
