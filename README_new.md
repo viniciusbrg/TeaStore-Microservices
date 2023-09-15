@@ -4,6 +4,10 @@
 
 To create a kubernetes cluster on AWS to run TeaStore you just need to have the AWS cli and kubectl on your machine.
 
+We recommend that you use AWS Cloud Shell, since the tools required for following the steps below are already configured.
+
+First, clone the repository and run all the commands below from the root of the repository in a terminal.
+
 1. Create the EKS clusters for the applications & locust load balancer
 
     1. First we need to pick an ROLE ARN to use for the clusters. 
