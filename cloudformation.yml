@@ -1,16 +1,21 @@
 AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+  ClustersARN:
+    Type: String
+    Description: Cluster ARN
+  ClustersSubnetIds:
+    Description: Subnet IDs
+    Type: "List<AWS::EC2::Subnet::Id>"
+
 Resources:
   EKSTeastore:
     Type: 'AWS::EKS::Cluster'
     Properties:
       Name: teastore-cluster
-      RoleArn: arn:aws:iam::594411245622:role/LabRole
+      RoleArn: !Ref ClustersARN
       ResourcesVpcConfig:
         SubnetIds:
-          - subnet-046503977e6ef5a5b
-          - subnet-06e0b229c77329004
-          - subnet-0b0e0e4bd8cb00937
-          - subnet-0e0c19a63f9406020
+          !Ref ClustersSubnetIds
   EKSTeastoreNodegroup:
     Type: 'AWS::EKS::Nodegroup'
     Properties:
@@ -20,24 +25,18 @@ Resources:
       InstanceTypes:
         - c4.xlarge
       NodegroupName: teastoreclusternodegroup
-      NodeRole: arn:aws:iam::594411245622:role/LabRole
+      NodeRole: !Ref ClustersARN
       Subnets:
-        - subnet-046503977e6ef5a5b
-        - subnet-06e0b229c77329004
-        - subnet-0b0e0e4bd8cb00937
-        - subnet-0e0c19a63f9406020
+        !Ref ClustersSubnetIds
     DependsOn: EKSTeastore
   EKSLoadTest:
     Type: 'AWS::EKS::Cluster'
     Properties:
       Name: teastore-loadtester
-      RoleArn: arn:aws:iam::594411245622:role/LabRole
+      RoleArn: !Ref ClustersARN
       ResourcesVpcConfig:
         SubnetIds:
-          - subnet-046503977e6ef5a5b
-          - subnet-06e0b229c77329004
-          - subnet-0b0e0e4bd8cb00937
-          - subnet-0e0c19a63f9406020
+          !Ref ClustersSubnetIds
   EKSLoadTestNodegroup:
     Type: 'AWS::EKS::Nodegroup'
     Properties:
@@ -47,10 +46,7 @@ Resources:
       InstanceTypes:
         - t3.medium
       NodegroupName: teastoreloadtesternodegroup
-      NodeRole: arn:aws:iam::594411245622:role/LabRole
+      NodeRole: !Ref ClustersARN
       Subnets:
-        - subnet-046503977e6ef5a5b
-        - subnet-06e0b229c77329004
-        - subnet-0b0e0e4bd8cb00937
-        - subnet-0e0c19a63f9406020
+        !Ref ClustersSubnetIds
     DependsOn: EKSLoadTest
