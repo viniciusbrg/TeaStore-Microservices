@@ -8,36 +8,20 @@ We recommend that you use AWS Cloud Shell, since the tools required for followin
 
 First, clone the repository and run all the commands below from the root of the repository in a terminal.
 
-1. Create the EKS clusters for the applications & locust load balancer
-
-    1. First we need to pick an ROLE ARN to use for the clusters. 
-        Run the command below command to get pick the available ROLE ARN's in your account.
+1. Create the EKS clusters for the applications & locust load balancer running the command below:
+    1. First we need to pick an ROLE ARN to use for the clusters.
+       Run the command below command to get pick the available ROLE ARN's in your account.
         ```
        aws iam list-roles | grep Arn
        ```
-    2. Check the subnets ids in your account with the command below and pick the subnets that you want to use for your cluster.
-        ```
-       aws ec2 describe-subnets 
-       ```
-    3. Once you have the subnet ids and the Role ARN to deploy the EKS clusters, simply run the command bellow to deploy
-   two EKS clusters, one for TeaStore and the other one to run a Locust cluster for load generation.
-
-```
-       aws cloudformation create-stack --stack-name teastorestack --template-body file://cloudformation.yml \\
-       --parameters ParameterKey=ClustersARN,ParameterValue=<ARN> \\
-       ParameterKey=ClustersSubnetIds,ParameterValue=<subnet1>\\,subnet2\\,subnet3
-```
-
-        Example:
-        ```
-        aws cloudformation create-stack --stack-name teastorestack --template-body file://cloudformation.yml \\
-        --parameters ParameterKey=ClustersARN,ParameterValue=arn:aws:iam::594411245622:role/LabRole \\
-        ParameterKey=ClustersSubnetIds,ParameterValue=subnet-046503977e6ef5a5b\\,subnet-06e0b229c77329004\\,subnet-0b0e0e4bd8cb00937\\,subnet-0e0c19a63f9406020
-        ```
-
-    PS: Note that the SubnetIds must be separated by a comma, however we need to escape the comma, thus we need to write `<subnetid>\\,<other subnet id>` to escape things properly.
+    2. Once we select a Role ARN to deploy the EKS clusters, simply run the command bellow to deploy
+       two EKS clusters, one for TeaStore and the other one to run a Locust cluster for load generation.
+    ```bash
+    ./deploy_cluster.sh <selected arn>`
+    ```
 
 2. Wait until your clusters are provisioned and working on AWS. You can check the CloudFormation page to track the progress.
+Usually this process takes around 10 to 20 minutes, so this is a good opportunity to grab a cup of tea ;)
 
 3. Now that the clusters are created, we can setup the applications inside Kubernetes. First, we need to authenticate with K8S.
 
