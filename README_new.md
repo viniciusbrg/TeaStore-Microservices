@@ -52,11 +52,11 @@ Now we're done! We have locust and teastore running and now we can experiment us
 
 ## Accessing the machines
 
-To allow accessing the machines, we have to free the ports inside the security groups. 
-
 To get the machine addresses for each cluster, switch to the respective context and get the machines IP's with the command below:
 
 `kubectl describe nodes | grep ExternalIP`
+
+The ports for each service are already exposed to the world, thus one can simply access the services using the IP address and port of the desired service.
 
 We're exposing as NodePorts the following ports:
 

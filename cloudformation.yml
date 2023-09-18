@@ -50,3 +50,66 @@ Resources:
       Subnets:
         !Ref ClustersSubnetIds
     DependsOn: EKSLoadTest
+  TeastoreWebUIPort:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      CidrIp: "0.0.0.0/0"
+      Description: "Webui"
+      FromPort: 32008
+      GroupId: !GetAtt EKSTeastore.ClusterSecurityGroupId
+      IpProtocol: tcp
+      ToPort: 32008
+  TeastoreZipkinPort:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      CidrIp: "0.0.0.0/0"
+      Description: "Zipkin"
+      FromPort: 32200
+      GroupId: !GetAtt EKSTeastore.ClusterSecurityGroupId
+      IpProtocol: tcp
+      ToPort: 32200
+  TeastorePrometheusPort:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      CidrIp: "0.0.0.0/0"
+      Description: "Prometheus"
+      FromPort: 32201
+      GroupId: !GetAtt EKSTeastore.ClusterSecurityGroupId
+      IpProtocol: tcp
+      ToPort: 32201
+  TeastoreLokiPort:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      CidrIp: "0.0.0.0/0"
+      Description: "Loki"
+      FromPort: 32202
+      GroupId: !GetAtt EKSTeastore.ClusterSecurityGroupId
+      IpProtocol: tcp
+      ToPort: 32202
+  TeastoreGrafanaPort:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      CidrIp: "0.0.0.0/0"
+      Description: "Grafana"
+      FromPort: 32203
+      GroupId: !GetAtt EKSTeastore.ClusterSecurityGroupId
+      IpProtocol: tcp
+      ToPort: 32203
+  TeastoreJaegerPort:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      CidrIp: "0.0.0.0/0"
+      Description: "Jaeger"
+      FromPort: 32204
+      GroupId: !GetAtt EKSTeastore.ClusterSecurityGroupId
+      IpProtocol: tcp
+      ToPort: 32204
+  TeastoreLocustPort:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      CidrIp: "0.0.0.0/0"
+      Description: "Locust"
+      FromPort: 32001
+      GroupId: !GetAtt EKSLoadTest.ClusterSecurityGroupId
+      IpProtocol: tcp
+      ToPort: 32001
