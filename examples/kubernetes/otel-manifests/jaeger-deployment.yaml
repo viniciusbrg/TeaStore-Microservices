@@ -28,6 +28,9 @@ spec:
       containers:
         - image: jaegertracing/all-in-one:latest
           name: jaeger
+          env:
+          - name: COLLECTOR_OTLP_ENABLED
+            value: "true"
           ports:
             - containerPort: 16686
               protocol: TCP
@@ -35,6 +38,9 @@ spec:
               protocol: TCP
             - containerPort: 14250
               protocol: TCP
+            - containerPort: 4317
+              protocol: TCP            
+
           resources: 
             requests:
               cpu: 100m

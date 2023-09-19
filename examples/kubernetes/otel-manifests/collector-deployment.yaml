@@ -29,7 +29,7 @@ spec:
       containers:
         - args:
             - --config=/otel-config.yaml
-          image: otel/opentelemetry-collector-contrib:0.72.0
+          image: otel/opentelemetry-collector-contrib:0.85.0
           name: collector
           ports:
             - containerPort: 4317
@@ -49,12 +49,24 @@ spec:
             - containerPort: 55679
               protocol: TCP
           resources: {}
+          env:
+            - name: K8S_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
           volumeMounts:
             - name: config-volume
               mountPath: /otel-config.yaml
               subPath: config.yaml
             - mountPath: /hostfs
               name: test-volume
+            - name: varlogpods
+              mountPath: /var/log/pods
+              readOnly: true
+            - name: varlibdockercontainers
+              mountPath: /var/lib/docker/containers
+              readOnly: true              
+
       restartPolicy: Always
       volumes:
         - name: config-volume
@@ -63,4 +75,10 @@ spec:
         - name: test-volume
           hostPath:
             path: /
+        - name: varlogpods
+          hostPath:
+            path: /var/log/pods
+        - name: varlibdockercontainers
+          hostPath:
+            path: /var/lib/docker/containers          
 status: {}

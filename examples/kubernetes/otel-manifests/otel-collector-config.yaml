@@ -5,6 +5,12 @@ metadata:
 data:
   config.yaml: |
     receivers:
+      kubeletstats:
+        collection_interval: 5s
+        auth_type: "serviceAccount"
+        endpoint: "${env:K8S_NODE_NAME}:10250"
+        insecure_skip_verify: true
+
       hostmetrics:
         root_path: /hostfs
         collection_interval: 5s
@@ -29,7 +35,13 @@ data:
           http:
     
       filelog:
-        include: [/var/log/*.log]
+        include:
+        - /var/log/pods/*/*/*.log
+        exclude:
+        - /var/log/pods/*/otel-collector/*.log
+        start_at: beginning
+        include_file_path: true
+        include_file_name: false    
     
     processors:
       filter:
@@ -50,31 +62,31 @@ data:
     
     exporters:
       logging:
-        verbosity: detailed
+        verbosity: normal
     
       zipkin:
         endpoint: http://zipkin:9411/api/v2/spans
     
-      jaeger:
-        endpoint: jaeger:14250
-        tls:
-          insecure: true
-    
       loki:
         endpoint: http://loki:3100/loki/api/v1/push
-    
+
       prometheus:
         endpoint: "0.0.0.0:8889"
+
+      otlp:
+        endpoint: "jaeger:4317"
+        tls:
+          insecure: true
     
     service:
       pipelines:
         metrics:
-          receivers: [hostmetrics, otlp, mysql]
+          receivers: [otlp, mysql, kubeletstats, hostmetrics]
           exporters: [prometheus]
         traces:
           receivers: [otlp]
-          exporters: [zipkin, jaeger]
+          exporters: [zipkin, otlp]                        
         logs:
           receivers: [otlp, filelog]
           processors: [attributes]
-          exporters: [loki]
+          exporters: [logging, loki]
