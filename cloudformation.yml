@@ -55,10 +55,10 @@ Resources:
     Properties:
       CidrIp: "0.0.0.0/0"
       Description: "Webui"
-      FromPort: 32008
+      FromPort: 30080
       GroupId: !GetAtt EKSTeastore.ClusterSecurityGroupId
       IpProtocol: tcp
-      ToPort: 32008
+      ToPort: 30080
   TeastoreZipkinPort:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
