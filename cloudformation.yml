@@ -4,6 +4,14 @@ Parameters:
     Type: String
     Default: c4.xlarge
     Description: Default is c4.xlarge
+  TeastoreInstances:
+    Type: Number
+    Default: "2"
+    Description: Default is 2 instances. Cluster will always have this number of instances
+  LocustInstances:
+    Type: Number
+    Default: "2"
+    Description: Default is 2 instances. Cluster will always have this number of instances
   LocustInstanceType:
     Type: String
     Default: t3.medium
@@ -30,6 +38,10 @@ Resources:
       AmiType: AL2_x86_64
       CapacityType: ON_DEMAND
       ClusterName: teastore-cluster
+      ScalingConfig:
+        MinSize: !Ref TeastoreInstances
+        DesiredSize: !Ref TeastoreInstances
+        MaxSize: !Ref TeastoreInstances
       InstanceTypes:
         - !Ref TeastoreInstanceType
       NodegroupName: teastoreclusternodegroup
@@ -51,6 +63,10 @@ Resources:
       AmiType: AL2_x86_64
       CapacityType: ON_DEMAND
       ClusterName: teastore-loadtester
+      ScalingConfig:
+        MinSize: !Ref LocustInstances
+        DesiredSize: !Ref LocustInstances
+        MaxSize: !Ref LocustInstances
       InstanceTypes:
         - !Ref LocustInstanceType
       NodegroupName: teastoreloadtesternodegroup
