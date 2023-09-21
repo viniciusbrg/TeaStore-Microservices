@@ -19,6 +19,13 @@ spec:
     - name: "collector"
       port: 14250
       targetPort: 14250
+    - name: "collectora"
+      port: 14268
+      targetPort: 14268
+    - name: "collectorb"
+      port: 4317
+      targetPort: 4317
+  
   selector:
     io.kompose.service: jaeger
 status:
