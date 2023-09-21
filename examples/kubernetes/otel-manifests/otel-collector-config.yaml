@@ -18,8 +18,8 @@ data:
     
       mysql:
         endpoint: teastore-db:3306
-        username: teauser
-        password: teapassword
+        username: root
+        password: rootpassword
         database: teadb
         collection_interval: 10s
     
