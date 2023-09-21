@@ -15,13 +15,35 @@ First, clone the repository and run all the commands below from the root of the 
       ```
       aws iam list-roles | grep Arn
       ```
-   2. Once we select a Role ARN to deploy the EKS clusters, simply run the command bellow to deploy
-      two EKS clusters, one for TeaStore and the other one to run a Locust cluster for load generation.
+2. Once we select a Role ARN to deploy the EKS clusters, simply run the command bellow to deploy
+   two EKS clusters, one for TeaStore and the other one to run a Locust cluster for load generation.
+   The command allow users to specify some parameters, which are the following:
+
+   `ARN` the AWS ROLE ARN to use while deploying the resources
+
+   `TEASTORE_INSTANCE_TYPE` the instance type for running teastore pods
+   
+   `TEASTORE_INSTANCES` number of instances for the Teastore cluster
+   
+   `LOCUST_INSTANCE_TYPE` the instance type for running locust pods
+   
+   `LOCUST_INSTANCES` number of instances for the Locust cluster
+      
+   If any of the parameters isn't specified, a default value is used instead, except for the ARN parameter.
 
    ```bash
-   ./deploy_cluster.sh <selected arn>`
+   ./deploy_cluster.sh ARN=<selected arn>`
    ```
+   
+   Example:
 
+   ```bash
+   ./deploy_cluster.sh ARN=<selected arn> TEASTORE_INSTANCE_TYPE=t3.large LOCUST_INSTANCES=3`
+   ```
+   
+   If any errors happen while AWS is deploying the cloudformation stack, we'll have to delete it in order to recreate it.
+   To delete the failed stack, run the command  `aws cloudformation delete-stack --stack-name teastorestack` and then try the command above again.
+   
 2. Wait until your clusters are provisioned and working on AWS. You can check the CloudFormation page to track the progress.
    Usually this process takes around 10 to 20 minutes, so this is a good opportunity to grab a cup of tea ;)
 
