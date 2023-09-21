@@ -1,5 +1,13 @@
 AWSTemplateFormatVersion: 2010-09-09
 Parameters:
+  TeastoreInstanceType:
+    Type: String
+    Default: c4.xlarge
+    Description: Default is c4.xlarge
+  LocustInstanceType:
+    Type: String
+    Default: t3.medium
+    Description: Default is t3.medium
   ClustersARN:
     Type: String
     Description: Cluster ARN
@@ -23,7 +31,7 @@ Resources:
       CapacityType: ON_DEMAND
       ClusterName: teastore-cluster
       InstanceTypes:
-        - c4.xlarge
+        - !Ref TeastoreInstanceType
       NodegroupName: teastoreclusternodegroup
       NodeRole: !Ref ClustersARN
       Subnets:
@@ -44,7 +52,7 @@ Resources:
       CapacityType: ON_DEMAND
       ClusterName: teastore-loadtester
       InstanceTypes:
-        - t3.medium
+        - !Ref LocustInstanceType
       NodegroupName: teastoreloadtesternodegroup
       NodeRole: !Ref ClustersARN
       Subnets:
