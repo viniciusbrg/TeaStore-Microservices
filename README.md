@@ -84,8 +84,8 @@ The respective scripts are:
 
 - `deploy_teastore_monolithic.sh` for the Monolithic TeaStore without open telemetry.
 - `deploy_teastore_monolithic_otel.sh` for the Monolithic TeaStore with open telemetry.
-- `deploy_teastore_microservices.sh` for the Monolithic TeaStore without open telemetry.
-- `deploy_teastore_microservices_otel.sh` for the Monolithic TeaStore with open telemetry.
+- `deploy_teastore_microservices.sh` for the Microservices TeaStore without open telemetry.
+- `deploy_teastore_microservices_otel.sh` for the Microservices TeaStore with open telemetry.
 
 Now we're done! We have locust and teastore running, and now we can experiment using the cluster.
 
