@@ -83,8 +83,8 @@ services:
   collector:
     image: otel/opentelemetry-collector-contrib:0.72.0
     volumes:
-      - ./otel-config.yaml:/otel-config.yaml
-    command: [ "--config=/otel-config.yaml" ]
+      - ./otel-collector-config.yaml:/otel-collector-config.yaml
+    command: [ "--config=/otel-collector-config.yaml" ]
     expose:
       - "8889" # Prometheus exporter metrics
     ports:
@@ -101,9 +101,9 @@ services:
   prometheus:
     image: prom/prometheus
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus-config.yml:/etc/prometheus/prometheus-config.yml
     command:
-      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--config.file=/etc/prometheus/prometheus-config.yml"
       - "--web.enable-admin-api"
     ports:
       - "9090:9090"

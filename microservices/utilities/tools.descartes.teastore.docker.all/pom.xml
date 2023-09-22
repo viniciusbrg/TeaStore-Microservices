@@ -114,7 +114,7 @@
 		                  <destFileName>tools.descartes.teastore.webui.war</destFileName>
 		                </artifactItem>
 		              </artifactItems>
-		              <outputDirectory>${project.build.directory}/</outputDirectory>
+		              <outputDirectory>target</outputDirectory>
 		              <overWriteReleases>false</overWriteReleases>
 		              <overWriteSnapshots>true</overWriteSnapshots>
 		            </configuration>
