@@ -27,7 +27,7 @@ Resources:
   EKSTeastore:
     Type: 'AWS::EKS::Cluster'
     Properties:
-      Name: teastore-cluster
+      Name: app-cluster
       RoleArn: !Ref ClustersARN
       ResourcesVpcConfig:
         SubnetIds:
@@ -37,7 +37,7 @@ Resources:
     Properties:
       AmiType: AL2_x86_64
       CapacityType: ON_DEMAND
-      ClusterName: teastore-cluster
+      ClusterName: app-cluster
       ScalingConfig:
         MinSize: !Ref TeastoreInstances
         DesiredSize: !Ref TeastoreInstances
@@ -52,7 +52,7 @@ Resources:
   EKSLoadTest:
     Type: 'AWS::EKS::Cluster'
     Properties:
-      Name: teastore-loadtester
+      Name: loadtester-cluster
       RoleArn: !Ref ClustersARN
       ResourcesVpcConfig:
         SubnetIds:
@@ -62,7 +62,7 @@ Resources:
     Properties:
       AmiType: AL2_x86_64
       CapacityType: ON_DEMAND
-      ClusterName: teastore-loadtester
+      ClusterName: loadtester-cluster
       ScalingConfig:
         MinSize: !Ref LocustInstances
         DesiredSize: !Ref LocustInstances
