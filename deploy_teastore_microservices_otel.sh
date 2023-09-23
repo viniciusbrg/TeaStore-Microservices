@@ -8,8 +8,18 @@ kubectl config use-context $APP_CLUSTER
 kubectl apply -f microservices/examples/kubernetes/otel-manifests/
 kubectl apply -f microservices/examples/kubernetes/teastore-ribbon-otel.yaml
 
+echo "====== IP to Access TeaStore ======"
+
+kubectl describe nodes | grep ExternalIP
+
+echo "==================================="
+
 kubectl config use-context $LOADTEST_CLUSTER
 
 kubectl apply -f microservices/examples/locust-kubernetes/
 
-echo "IPs to access Teastore "
+echo "====== IP to Access Locust ======"
+
+kubectl describe nodes | grep ExternalIP
+
+echo "==================================="

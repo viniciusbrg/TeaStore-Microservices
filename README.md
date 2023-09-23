@@ -89,11 +89,10 @@ The respective scripts are:
 
 Now we're done! We have locust and teastore running, and now we can experiment using the cluster.
 
-## Accessing the machines
+The command will also print the IP addresses for the machines running the cluster, which can be used to access the 
+services running in the cluster.
 
-To get the machine addresses for each cluster, switch to the respective context and get the machines IP's with the command below:
-
-`kubectl describe nodes | grep ExternalIP`
+## Accessing the services
 
 The ports for each service are already exposed to the world, thus one can simply access the services using the IP address and port of the desired service.
 
@@ -111,51 +110,3 @@ We're exposing as NodePorts the following ports:
 ## Locust Cluster
 
 - 32001 (Locust)
-
-[//]: # ()
-[//]: # ()
-[//]: # (3. Now that the clusters are created, we can setup the applications inside Kubernetes. First, we need to authenticate with K8S.)
-
-[//]: # ()
-[//]: # (For that, we can issue the commands bellow to grab the `kubeconfig` files for both clusters.)
-
-[//]: # ()
-[//]: # (```)
-
-[//]: # (aws eks update-kubeconfig --region <your-aws-region> --name teastore-cluster)
-
-[//]: # (aws eks update-kubeconfig --region <your-aws-region> --name teastore-loadtester)
-
-[//]: # (```)
-
-[//]: # ()
-[//]: # (4. List the created contexts with the `kubectl config get-contexts` command. The displayed ARN's are going to be used to select)
-
-[//]: # (   the cluster in which we're going to deploy the applications. We'll use the teastore-cluster for running the teastore application)
-
-[//]: # (   and the teastore-loadtester cluster for running locust.)
-
-[//]: # ()
-[//]: # (5. Activate the `teastore-cluster` context issuing the `kubectl config use-context <context name>` using the context name from the previous step.)
-
-[//]: # ()
-[//]: # (6. Deploy the Metrics Server with the [link]&#40;https://docs.aws.amazon.com/eks/latest/userguide/metrics-server.html&#41;)
-
-[//]: # ()
-[//]: # (7. Deploy OTEL infrastructure running `kubectl apply -f examples/kubernetes/otel-manifests/`)
-
-[//]: # ()
-[//]: # (8. Deploy TeaStore infrastructure running `kubectl apply -f examples/kubernetes/teastore-ribbon-otel.yaml`)
-
-[//]: # ()
-[//]: # (Now that we have TeaStore deployed, we can deploy Locust to load test our TeaStore deployment.)
-
-[//]: # ()
-[//]: # (9. Switch to the `teastore-loadtester` cluster.)
-
-[//]: # ()
-[//]: # (10. Deploy locust with the `kubectl apply -f examples/locust-kubernetes/`)
-
-[//]: # ()
-[//]: # ()
-[//]: # ()
