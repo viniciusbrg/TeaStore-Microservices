@@ -5,7 +5,7 @@ LOADTEST_CLUSTER=$(aws eks update-kubeconfig --name loadtester-cluster | sed -e 
 
 kubectl config use-context $APP_CLUSTER
 
-kubectl apply -f monolith/examples/kubernetes/k8s.yaml
+kubectl apply -f monolith/examples/kubernetes/k8s.yml
 
 echo "====== IP to Access TeaStore ======"
 
