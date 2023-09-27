@@ -25,7 +25,7 @@ spec:
     - name: "collectorb"
       port: 4317
       targetPort: 4317
-  
+      nodePort: 32206  
   selector:
     io.kompose.service: jaeger
 status:

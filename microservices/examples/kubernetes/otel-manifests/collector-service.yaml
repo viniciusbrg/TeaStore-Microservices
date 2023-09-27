@@ -10,19 +10,24 @@ metadata:
   name: collector
   namespace: default
 spec:
+  type: NodePort
   ports:
     - name: "4317"
       port: 4317
       targetPort: 4317
+      nodePort: 32300
     - name: "4318"
       port: 4318
       targetPort: 4318
+      nodePort: 32301        
     - name: "8888"
       port: 8888
       targetPort: 8888
+      nodePort: 32302        
     - name: "8889"
       port: 8889
       targetPort: 8889
+      nodePort: 32303        
   selector:
     io.kompose.service: collector
 status:

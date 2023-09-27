@@ -161,6 +161,6 @@ Resources:
       CidrIp: "0.0.0.0/0"
       Description: "Locust"
       FromPort: 32001
-      GroupId: !GetAtt EKSBackend.ClusterSecurityGroupId
+      GroupId: !GetAtt EKSLoadTest.ClusterSecurityGroupId
       IpProtocol: tcp
       ToPort: 32001
