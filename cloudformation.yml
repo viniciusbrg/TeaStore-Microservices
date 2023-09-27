@@ -8,6 +8,14 @@ Parameters:
     Type: Number
     Default: "2"
     Description: Default is 2 instances. Cluster will always have this number of instances
+  BackendInstanceType:
+    Type: String
+    Default: c4.xlarge
+    Description: Default is c4.xlarge
+  BackendInstances:
+    Type: Number
+    Default: "2"
+    Description: Default is 2 instances. Cluster will always have this number of instances
   LocustInstances:
     Type: Number
     Default: "2"
@@ -25,15 +33,14 @@ Parameters:
 
 Resources:
   EKSTeastore:
-    Type: 'AWS::EKS::Cluster'
+    Type: "AWS::EKS::Cluster"
     Properties:
       Name: app-cluster
       RoleArn: !Ref ClustersARN
       ResourcesVpcConfig:
-        SubnetIds:
-          !Ref ClustersSubnetIds
+        SubnetIds: !Ref ClustersSubnetIds
   EKSTeastoreNodegroup:
-    Type: 'AWS::EKS::Nodegroup'
+    Type: "AWS::EKS::Nodegroup"
     Properties:
       AmiType: AL2_x86_64
       CapacityType: ON_DEMAND
@@ -46,19 +53,17 @@ Resources:
         - !Ref TeastoreInstanceType
       NodegroupName: teastoreclusternodegroup
       NodeRole: !Ref ClustersARN
-      Subnets:
-        !Ref ClustersSubnetIds
+      Subnets: !Ref ClustersSubnetIds
     DependsOn: EKSTeastore
   EKSLoadTest:
-    Type: 'AWS::EKS::Cluster'
+    Type: "AWS::EKS::Cluster"
     Properties:
       Name: loadtester-cluster
       RoleArn: !Ref ClustersARN
       ResourcesVpcConfig:
-        SubnetIds:
-          !Ref ClustersSubnetIds
+        SubnetIds: !Ref ClustersSubnetIds
   EKSLoadTestNodegroup:
-    Type: 'AWS::EKS::Nodegroup'
+    Type: "AWS::EKS::Nodegroup"
     Properties:
       AmiType: AL2_x86_64
       CapacityType: ON_DEMAND
@@ -71,9 +76,31 @@ Resources:
         - !Ref LocustInstanceType
       NodegroupName: teastoreloadtesternodegroup
       NodeRole: !Ref ClustersARN
-      Subnets:
-        !Ref ClustersSubnetIds
+      Subnets: !Ref ClustersSubnetIds
     DependsOn: EKSLoadTest
+  EKSBackend:
+    Type: "AWS::EKS::Cluster"
+    Properties:
+      Name: backend-cluster
+      RoleArn: !Ref ClustersARN
+      ResourcesVpcConfig:
+        SubnetIds: !Ref ClustersSubnetIds
+  EKSBackendNodegroup:
+    Type: "AWS::EKS::Nodegroup"
+    Properties:
+      AmiType: AL2_x86_64
+      CapacityType: ON_DEMAND
+      ClusterName: backend-cluster
+      ScalingConfig:
+        MinSize: !Ref BackendInstances
+        DesiredSize: !Ref BackendInstances
+        MaxSize: !Ref BackendInstances
+      InstanceTypes:
+        - !Ref BackendInstanceType
+      NodegroupName: backendnodegroup
+      NodeRole: !Ref ClustersARN
+      Subnets: !Ref ClustersSubnetIds
+    DependsOn: EKSBackend
   TeastoreWebUIPort:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
@@ -89,7 +116,7 @@ Resources:
       CidrIp: "0.0.0.0/0"
       Description: "Zipkin"
       FromPort: 32200
-      GroupId: !GetAtt EKSTeastore.ClusterSecurityGroupId
+      GroupId: !GetAtt EKSBackend.ClusterSecurityGroupId
       IpProtocol: tcp
       ToPort: 32200
   TeastorePrometheusPort:
@@ -98,7 +125,7 @@ Resources:
       CidrIp: "0.0.0.0/0"
       Description: "Prometheus"
       FromPort: 32201
-      GroupId: !GetAtt EKSTeastore.ClusterSecurityGroupId
+      GroupId: !GetAtt EKSBackend.ClusterSecurityGroupId
       IpProtocol: tcp
       ToPort: 32201
   TeastoreLokiPort:
@@ -107,7 +134,7 @@ Resources:
       CidrIp: "0.0.0.0/0"
       Description: "Loki"
       FromPort: 32202
-      GroupId: !GetAtt EKSTeastore.ClusterSecurityGroupId
+      GroupId: !GetAtt EKSBackend.ClusterSecurityGroupId
       IpProtocol: tcp
       ToPort: 32202
   TeastoreGrafanaPort:
@@ -116,7 +143,7 @@ Resources:
       CidrIp: "0.0.0.0/0"
       Description: "Grafana"
       FromPort: 32203
-      GroupId: !GetAtt EKSTeastore.ClusterSecurityGroupId
+      GroupId: !GetAtt EKSBackend.ClusterSecurityGroupId
       IpProtocol: tcp
       ToPort: 32203
   TeastoreJaegerPort:
@@ -125,7 +152,7 @@ Resources:
       CidrIp: "0.0.0.0/0"
       Description: "Jaeger"
       FromPort: 32204
-      GroupId: !GetAtt EKSTeastore.ClusterSecurityGroupId
+      GroupId: !GetAtt EKSBackend.ClusterSecurityGroupId
       IpProtocol: tcp
       ToPort: 32204
   TeastoreLocustPort:
@@ -134,6 +161,6 @@ Resources:
       CidrIp: "0.0.0.0/0"
       Description: "Locust"
       FromPort: 32001
-      GroupId: !GetAtt EKSLoadTest.ClusterSecurityGroupId
+      GroupId: !GetAtt EKSBackend.ClusterSecurityGroupId
       IpProtocol: tcp
       ToPort: 32001
