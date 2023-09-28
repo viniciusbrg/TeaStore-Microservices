@@ -40,9 +40,9 @@ data:
             if run_time < stage["duration"]:
               tick_data = (stage["users"], stage["spawn_rate"])
               return tick_data
-            else:
-              return None
-          return None    
+          else:
+            return None
+        return None    
 
     class UserBehavior(HttpUser):
 
