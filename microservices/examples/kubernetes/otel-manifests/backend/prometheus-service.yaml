@@ -16,7 +16,7 @@ spec:
       port: 9090
       targetPort: 9090
       nodePort: 32201
-      name: "8889"
+    - name: "8889"
       port: 8889
       targetPort: 8889
       nodePort: 32205      
