@@ -128,6 +128,15 @@ Resources:
       GroupId: !GetAtt EKSBackend.ClusterSecurityGroupId
       IpProtocol: tcp
       ToPort: 32201
+  TeastorePrometheusBackendPort:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      CidrIp: "0.0.0.0/0"
+      Description: "PrometheusBackend"
+      FromPort: 32205
+      GroupId: !GetAtt EKSBackend.ClusterSecurityGroupId
+      IpProtocol: tcp
+      ToPort: 32205
   TeastoreLokiPort:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
@@ -155,6 +164,15 @@ Resources:
       GroupId: !GetAtt EKSBackend.ClusterSecurityGroupId
       IpProtocol: tcp
       ToPort: 32204
+  TeastoreJaegerBackendPort:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      CidrIp: "0.0.0.0/0"
+      Description: "JaegerBackend"
+      FromPort: 32206
+      GroupId: !GetAtt EKSBackend.ClusterSecurityGroupId
+      IpProtocol: tcp
+      ToPort: 32206
   TeastoreLocustPort:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:

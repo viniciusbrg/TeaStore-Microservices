@@ -71,7 +71,7 @@ data:
         endpoint: http://${BACKEND_URL_PLACEHOLDER}:32202/loki/api/v1/push
 
       prometheus:
-        endpoint: "${BACKEND_URL_PLACEHOLDER}:8889"
+        endpoint: "${BACKEND_URL_PLACEHOLDER}:32205"
 
       otlp:
         endpoint: "http://${BACKEND_URL_PLACEHOLDER}:32206"
