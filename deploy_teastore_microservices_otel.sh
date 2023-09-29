@@ -17,9 +17,15 @@ echo "==================================="
 
 kubectl config use-context $APP_CLUSTER
 
+# backup
+cp microservices/examples/kubernetes/otel-manifests/otel-collector-config.yaml .
+
 bash update_collector_placeholders.sh > microservices/examples/kubernetes/otel-manifests/otel-collector-config.yaml
 kubectl apply -f microservices/examples/kubernetes/otel-manifests/
 kubectl apply -f microservices/examples/kubernetes/teastore-ribbon-otel.yaml
+
+# undo file changes
+mv ./otel-collector-config.yaml microservices/examples/kubernetes/otel-manifests/
 
 echo "====== IP to Access TeaStore ======"
 
