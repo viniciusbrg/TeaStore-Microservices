@@ -7,7 +7,7 @@ BACKEND_CLUSTER=$(aws eks update-kubeconfig --name backend-cluster | sed -e 's/A
 kubectl config use-context $BACKEND_CLUSTER
 kubectl apply -f microservices/examples/kubernetes/otel-manifests/backend/
 
-export BACKEND_IP=$(kubectl describe nodes | grep -m1 ExternalIP | cut -d ":" -f2)
+OTEL_BACKEND_IP=$(kubectl describe nodes | grep -m1 ExternalIP | cut -d ":" -f2)
 
 echo "====== IP to Access Backend ======"
 
@@ -16,6 +16,8 @@ kubectl describe nodes | grep ExternalIP
 echo "==================================="
 
 kubectl config use-context $APP_CLUSTER
+
+bash update_collector_placeholders.sh > microservices/examples/kubernetes/otel-manifests/otel-collector-config.yaml
 kubectl apply -f microservices/examples/kubernetes/otel-manifests/
 kubectl apply -f microservices/examples/kubernetes/teastore-ribbon-otel.yaml
 
