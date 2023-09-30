@@ -28,7 +28,7 @@ spec:
         - image: locustio/locust
           imagePullPolicy: Always
           name: master
-          args: ["--master --headless -u 10 -t 120 --expect-workers --csv=results"]
+          args: ["--master", "--headless", "--expect-workers", "--csv=results"]
           volumeMounts:
             - mountPath: /home/locust
               name: locust-scripts
