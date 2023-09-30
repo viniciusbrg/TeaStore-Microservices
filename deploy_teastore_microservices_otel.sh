@@ -36,7 +36,12 @@ echo "==================================="
 
 kubectl config use-context $LOADTEST_CLUSTER
 
-kubectl apply -f microservices/examples/locust-kubernetes/
+kubectl apply -f microservices/examples/locust-kubernetes/scripts-cm.yaml
+kubectl apply -f microservices/examples/locust-kubernetes/master-deployment.yaml
+kubectl apply -f microservices/examples/locust-kubernetes/service.yaml
+kubectl apply -f microservices/examples/locust-kubernetes/nodeport.yaml
+kubectl apply -f microservices/examples/locust-kubernetes/slave-deployment.yaml
+
 
 echo "====== IP to Access Locust ======"
 
