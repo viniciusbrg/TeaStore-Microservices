@@ -28,7 +28,7 @@ spec:
         - image: locustio/locust
           imagePullPolicy: Always
           name: master
-          args: ["--master", "--headless", "--expect-workers=2", "--csv=results"]
+          args: ["--master", "--headless", "--expect-workers=2", "--csv=/tmp/results", "--host=http://3.238.93.131:30080/tools.descartes.teastore.webui"]
           volumeMounts:
             - mountPath: /home/locust
               name: locust-scripts
