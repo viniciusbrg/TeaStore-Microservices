@@ -1,23 +1,14 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
-  annotations:
-    deployment.kubernetes.io/revision: "1"
   labels:
     role: locust-master
     app: locust-master
   name: locust-master
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      role: locust-master
-      app: locust-master
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-    type: RollingUpdate
+  completions: 1
+  parallelism: 1
+  completionMode: Indexed  # required for the feature
   template:
     metadata:
       labels:
@@ -43,7 +34,7 @@ spec:
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
-      restartPolicy: Always
+      restartPolicy: OnFailure
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
