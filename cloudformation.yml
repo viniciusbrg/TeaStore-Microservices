@@ -110,6 +110,24 @@ Resources:
       GroupId: !GetAtt EKSTeastore.ClusterSecurityGroupId
       IpProtocol: tcp
       ToPort: 30080
+  TeastorCollectorPrometheusPort:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      CidrIp: "0.0.0.0/0"
+      Description: "PrometheusCollectorPort"
+      FromPort: 32303
+      GroupId: !GetAtt EKSTeastore.ClusterSecurityGroupId
+      IpProtocol: tcp
+      ToPort: 32303
+  TeastorCollectorPrometheusPortB:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      CidrIp: "0.0.0.0/0"
+      Description: "PrometheusCollectorPortB"
+      FromPort: 32302
+      GroupId: !GetAtt EKSTeastore.ClusterSecurityGroupId
+      IpProtocol: tcp
+      ToPort: 32302
   TeastoreZipkinPort:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
