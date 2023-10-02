@@ -19,5 +19,5 @@ data:
       - job_name: "collector"
         scrape_interval: 500ms
         static_configs:
-          - targets: ["${PROM_COLLECTOR_URL_PLACEHOLDER}:32303"]
-          - targets: ["${PROM_COLLECTOR_URL_PLACEHOLDER}:32302"]
+          - targets: ["collector:8889"]
+          - targets: ["collector:8888"]
