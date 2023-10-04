@@ -20,17 +20,19 @@ data:
       peak_one_users = 100
       peak_two_users = 100
       peak_three_users = 100
-      time_limit = 120
+      time_limit = 310
 
 
       stages = [
         {"duration": 5, "users": 10, "spawn_rate": 10},
-        {"duration": 20, "users": 100, "spawn_rate": 10},
-        {"duration": 40, "users": 10, "spawn_rate": 10},
-        {"duration": 60, "users": 100, "spawn_rate": 10},
-        {"duration": 80, "users": 10, "spawn_rate": 10},
-        {"duration": 100, "users": 100, "spawn_rate": 10},
-        {"duration": 120, "users": 10, "spawn_rate": 10}
+        {"duration": 20, "users": 200, "spawn_rate": 50},
+        {"duration": 80, "users": 200, "spawn_rate": 50},
+        {"duration": 100, "users": 10, "spawn_rate": 50},
+        {"duration": 160, "users": 10, "spawn_rate": 50},
+        {"duration": 170, "users": 200, "spawn_rate": 50},
+        {"duration": 250, "users": 200, "spawn_rate": 50},
+        {"duration": 270, "users": 10, "spawn_rate": 50},
+        {"duration": 330, "users": 10, "spawn_rate": 50}          
       ]
 
       def tick(self):
