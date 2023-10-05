@@ -65,16 +65,16 @@ data:
         verbosity: normal
     
       zipkin:
-        endpoint: http://54.174.71.32:32200/api/v2/spans
+        endpoint: http://54.205.198.134:32200/api/v2/spans
     
       loki:
-        endpoint: http://54.174.71.32:32202/loki/api/v1/push
+        endpoint: http://54.205.198.134:32202/loki/api/v1/push
 
       prometheus:
         endpoint: "0.0.0.0:8889"
 
       otlp:
-        endpoint: "http://54.174.71.32:32206"
+        endpoint: "http://54.205.198.134:32206"
         tls:
           insecure: true
     

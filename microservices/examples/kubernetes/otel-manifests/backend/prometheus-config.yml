@@ -19,5 +19,5 @@ data:
       - job_name: "collector"
         scrape_interval: 500ms
         static_configs:
-          - targets: ["54.83.125.48:32303"]
-          - targets: ["54.83.125.48:32302"]
+          - targets: ["18.232.137.193:32303"]
+          - targets: ["18.232.137.193:32302"]
