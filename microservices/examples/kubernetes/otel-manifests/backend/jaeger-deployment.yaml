@@ -28,6 +28,10 @@ spec:
       containers:
         - image: jaegertracing/all-in-one:latest
           name: jaeger
+          resources:
+            requests:
+                memory: "1Gi"
+                    cpu: "4"            
           env:
           - name: COLLECTOR_OTLP_ENABLED
             value: "true"
