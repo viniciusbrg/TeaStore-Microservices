@@ -30,8 +30,8 @@ spec:
           name: jaeger
           resources:
             requests:
-                memory: "1Gi"
-                    cpu: "4"            
+              memory: "1Gi"
+              cpu: "4"            
           env:
           - name: COLLECTOR_OTLP_ENABLED
             value: "true"
