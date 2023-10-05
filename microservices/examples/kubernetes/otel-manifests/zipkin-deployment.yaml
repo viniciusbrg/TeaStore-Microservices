@@ -28,6 +28,9 @@ spec:
       containers:
         - image: openzipkin/zipkin:latest
           name: zipkin
+          env:
+          - name: JAVA_OPTS
+            value: '-Xms4g -Xmx4g -XX:+ExitOnOutOfMemoryError'            
           ports:
             - containerPort: 9411
               hostPort: 9411
