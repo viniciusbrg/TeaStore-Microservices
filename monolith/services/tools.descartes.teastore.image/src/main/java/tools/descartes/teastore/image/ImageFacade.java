@@ -1,5 +1,6 @@
 package tools.descartes.teastore.image;
 
+import io.opentelemetry.instrumentation.annotations.WithSpan;
 import tools.descartes.teastore.entities.ImageSizePreset;
 import tools.descartes.teastore.entities.Product;
 import tools.descartes.teastore.image.rest.ImageProviderEndpoint;
@@ -10,6 +11,7 @@ import java.util.Map;
 
 public class ImageFacade {
 
+    @WithSpan
     public static Map<Long, String> getProductPreviewImages(List<Product> products) {
         HashMap<Long, String> img = new HashMap<>();
         for (Product p : products) {
@@ -19,6 +21,7 @@ public class ImageFacade {
         return new ImageProviderEndpoint().getProductImagesImpl(img);
     }
 
+    @WithSpan
     public static Map<Long, String> getProductImages(List<Product> products, ImageSizePreset preset) {
         HashMap<Long, String> img = new HashMap<>();
         for (Product p : products) {
@@ -28,10 +31,12 @@ public class ImageFacade {
         return new ImageProviderEndpoint().getProductImagesImpl(img);
     }
 
+    @WithSpan
     public static String getProductImage(Product product, ImageSizePreset preset) {
         return getProductImages(List.of(product), preset).getOrDefault(product.getId(), "");
     }
 
+    @WithSpan
     public static HashMap<String, String> getWebImages(List<String> names, ImageSizePreset preset) {
         HashMap<String, String> img = new HashMap<>();
         for (String name : names) {
@@ -41,10 +46,12 @@ public class ImageFacade {
         return new HashMap<>(new ImageProviderEndpoint().getUiImages(img));
     }
 
+    @WithSpan
     public static String getWebImage(String imageName, ImageSizePreset preset) {
         return getWebImages(List.of(imageName), preset).getOrDefault(imageName, "");
     }
 
+    @WithSpan
     public static String getWebImageIcon(String imageName) {
         return new ImageProviderEndpoint()
                 .getUiImages(new HashMap<>(Map.of(imageName, ImageSizePreset.ICON.getSize().toString())))
