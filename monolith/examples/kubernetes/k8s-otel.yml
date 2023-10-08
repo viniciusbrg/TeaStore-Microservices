@@ -18,7 +18,6 @@ spec:
       containers:
         - name: teastore-app-container
           image: ghcr.io/viniciusbrg/teastore-monolithic-otel/teastore-webui:latest
-          imagePullPolicy: IfNotPresent
           env:
             - name: HOST_NAME
               value: "webui"
