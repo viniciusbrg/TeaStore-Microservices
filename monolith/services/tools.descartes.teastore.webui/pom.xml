@@ -65,6 +65,11 @@
             <version>1.4.2</version>
             <scope>compile</scope>
         </dependency>
+		<dependency>
+			<groupId>io.opentelemetry.instrumentation</groupId>
+			<artifactId>opentelemetry-instrumentation-annotations</artifactId>
+			<version>1.30.0</version>
+		</dependency>
     </dependencies>
 
 	<build>
