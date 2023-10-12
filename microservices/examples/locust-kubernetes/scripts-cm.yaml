@@ -37,7 +37,8 @@ data:
           stages.extend(self.get_cycle_stages(i))
         return stages
       
-      stages = self.get_stages()
+      def __init__(self):
+        self.stages = self.get_stages()
       
       def tick(self):
         run_time = round(self.get_run_time())
