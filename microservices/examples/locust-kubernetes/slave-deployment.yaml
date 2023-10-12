@@ -8,7 +8,7 @@ metadata:
     app: locust-worker
   name: locust-worker
 spec:
-  replicas: 2
+  replicas: 8
   selector:
     matchLabels:
       role: locust-worker
