@@ -6,7 +6,7 @@ metadata:
   labels:
     app: teastore-app
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
       app: teastore-app
