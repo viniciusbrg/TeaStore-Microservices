@@ -27,8 +27,8 @@ data:
       
       def get_cycle_stages(self, i):
         return [
-          {"duration": self.cycle_time * i, "users": 100, "spawn_rate": 50},
-          {"duration": self.cycle_time * i + self.base_duration, "users": 200, "spawn_rate": 50}
+          {"duration": self.cycle_time * i + self.base_duration, "users": 100, "spawn_rate": 50},
+          {"duration": self.cycle_time * i + self.cycle_time, "users": 200, "spawn_rate": 50}
         ]
 
       def get_stages(self):
