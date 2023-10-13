@@ -64,9 +64,6 @@ data:
       logging:
         verbosity: normal
     
-      zipkin:
-        endpoint: http://zipkin:9411/api/v2/spans
-    
       loki:
         endpoint: http://loki:3100/loki/api/v1/push
 
@@ -85,7 +82,7 @@ data:
           exporters: [prometheus]
         traces:
           receivers: [otlp]
-          exporters: [zipkin, otlp]                        
+          exporters: [otlp]                        
         logs:
           receivers: [otlp, filelog]
           processors: [attributes]
