@@ -31,7 +31,6 @@ spec:
           resources:
             requests:
               memory: "2Gi"
-              cpu: "4"
             limits:
               memory: "2Gi"
           env:
