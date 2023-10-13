@@ -40,9 +40,9 @@ spec:
           - name: BADGER_EPHEMERAL
             value: "false"
           - name: BADGER_DIRECTORY_VALUE
-            value: "/badger/data"
+            value: "/tmp/badger/data"
           - name: BADGER_DIRECTORY_KEY
-            value: "/badger/key"
+            value: "/tmp/badger/key"
           ports:
             - containerPort: 16686
               protocol: TCP
