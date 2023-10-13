@@ -30,11 +30,19 @@ spec:
           name: jaeger
           resources:
             requests:
-              memory: "1Gi"
+              memory: "2Gi"
               cpu: "4"      
           env:
           - name: COLLECTOR_OTLP_ENABLED
             value: "true"
+          - name: SPAN_STORAGE_TYPE
+            value: "badger"
+          - name: BADGER_EPHEMERAL
+            value: "false"
+          - name: BADGER_DIRECTORY_VALUE
+            value: "/badger/data"
+          - name: BADGER_DIRECTORY_KEY
+            value: "/badger/key"
           ports:
             - containerPort: 16686
               protocol: TCP
