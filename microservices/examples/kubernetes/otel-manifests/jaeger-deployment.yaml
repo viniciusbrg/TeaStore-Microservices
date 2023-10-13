@@ -31,7 +31,9 @@ spec:
           resources:
             requests:
               memory: "2Gi"
-              cpu: "4"      
+              cpu: "4"
+            limits:
+              memory: "2Gi"
           env:
           - name: COLLECTOR_OTLP_ENABLED
             value: "true"
