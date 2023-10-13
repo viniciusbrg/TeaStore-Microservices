@@ -53,10 +53,6 @@ spec:
             - containerPort: 14250
               protocol: TCP
             - containerPort: 4317
-              protocol: TCP            
-
-          resources: 
-            requests:
-              cpu: 100m
+              protocol: TCP
       restartPolicy: Always
 status: {}
