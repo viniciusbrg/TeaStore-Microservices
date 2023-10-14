@@ -44,7 +44,7 @@ spec:
             value: "/tmp/badger/data"
           - name: BADGER_DIRECTORY_KEY
             value: "/tmp/badger/key"
-          - name: SAMPLING_STRATEGIES-FILE
+          - name: SAMPLING_STRATEGIES_FILE
             value: "/sampling-config.json"
           volumeMounts:
             - name: config-volume
