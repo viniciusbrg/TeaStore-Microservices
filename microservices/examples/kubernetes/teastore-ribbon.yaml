@@ -85,7 +85,7 @@ metadata:
     app: teastore
     run: teastore-persistence
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: teastore
@@ -206,7 +206,7 @@ metadata:
     app: teastore
     run: teastore-webui
 spec:
-  replicas: 4
+  replicas: 1
   selector:
     matchLabels:
       app: teastore
