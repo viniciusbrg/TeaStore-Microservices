@@ -44,6 +44,12 @@ spec:
             value: "/tmp/badger/data"
           - name: BADGER_DIRECTORY_KEY
             value: "/tmp/badger/key"
+          - name: SAMPLING_STRATEGIES-FILE
+            value: "/sampling-config.json"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /sampling-config.json
+              subPath: config.json
           ports:
             - containerPort: 16686
               protocol: TCP
@@ -53,5 +59,9 @@ spec:
               protocol: TCP
             - containerPort: 4317
               protocol: TCP
+      volumes:
+        - name: config-volume
+          configMap:
+            name: jaeger-sampling-config
       restartPolicy: Always
 status: {}
