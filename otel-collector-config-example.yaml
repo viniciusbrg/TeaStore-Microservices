@@ -64,8 +64,6 @@ data:
       logging:
         verbosity: normal
     
-      zipkin:
-        endpoint: http://${BACKEND_URL_PLACEHOLDER}:32200/api/v2/spans
     
       loki:
         endpoint: http://${BACKEND_URL_PLACEHOLDER}:32202/loki/api/v1/push
