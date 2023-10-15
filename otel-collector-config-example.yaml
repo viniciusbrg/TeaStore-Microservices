@@ -83,7 +83,7 @@ data:
           exporters: [prometheus]
         traces:
           receivers: [otlp]
-          exporters: [zipkin, otlp]                        
+          exporters: [otlp]                        
         logs:
           receivers: [otlp, filelog]
           processors: [attributes]
