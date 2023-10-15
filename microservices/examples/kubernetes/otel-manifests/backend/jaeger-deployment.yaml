@@ -30,11 +30,26 @@ spec:
           name: jaeger
           resources:
             requests:
-              memory: "1Gi"
-              cpu: "4"            
+              memory: "2Gi"
+            limits:
+              memory: "2Gi"
           env:
-          - name: COLLECTOR_OTLP_ENABLED
-            value: "true"
+            - name: COLLECTOR_OTLP_ENABLED
+              value: "true"
+            - name: SPAN_STORAGE_TYPE
+              value: "badger"
+            - name: BADGER_EPHEMERAL
+              value: "false"
+            - name: BADGER_DIRECTORY_VALUE
+              value: "/tmp/badger/data"
+            - name: BADGER_DIRECTORY_KEY
+              value: "/tmp/badger/key"
+            - name: SAMPLING_STRATEGIES_FILE
+              value: "/sampling-config.json"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /sampling-config.json
+              subPath: config.json
           ports:
             - containerPort: 16686
               protocol: TCP
@@ -43,10 +58,10 @@ spec:
             - containerPort: 14250
               protocol: TCP
             - containerPort: 4317
-              protocol: TCP            
-
-          resources: 
-            requests:
-              cpu: 100m
+              protocol: TCP
+      volumes:
+        - name: config-volume
+          configMap:
+            name: jaeger-sampling-config
       restartPolicy: Always
 status: {}
