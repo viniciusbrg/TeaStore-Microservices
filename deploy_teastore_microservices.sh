@@ -7,6 +7,11 @@ kubectl config use-context $APP_CLUSTER
 
 kubectl apply -f microservices/examples/kubernetes/teastore-ribbon.yaml
 
+sleep 80
+# only scale once app is running
+kubectl scale deployment teastore-webui --replicas=4
+kubectl scale deployment teastore-persistence --replicas=3
+
 echo "====== IP to Access TeaStore ======"
 
 kubectl describe nodes | grep ExternalIP

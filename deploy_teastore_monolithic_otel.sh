@@ -22,6 +22,10 @@ kubectl apply -f monolith/examples/kubernetes/db.yml
 sleep 15
 kubectl apply -f monolith/examples/kubernetes/k8s-otel.yml
 
+sleep 80
+# only scale once app is running
+kubectl scale deployment teastore-app --replicas=4
+
 echo "====== IP to Access TeaStore ======"
 
 kubectl describe nodes | grep ExternalIP
