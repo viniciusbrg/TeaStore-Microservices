@@ -9,7 +9,7 @@ kubectl apply -f monolith/examples/kubernetes/db.yml
 sleep 15
 kubectl apply -f monolith/examples/kubernetes/k8s.yml
 
-sleep 20
+sleep 80
 # only scale once app is running
 kubectl scale deployment teastore-app --replicas=4
 
