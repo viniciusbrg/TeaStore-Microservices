@@ -66,6 +66,8 @@ spec:
           value: "teastore-registry"
         - name: OTEL_EXPORTER_OTLP_ENDPOINT
           value: "http://collector:4317"
+        - name: OTEL_TRACES_SAMPLER
+          value: "jaeger_remote"
         - name: OTEL_LOGS_EXPORTER
           value: "otlp"
 ---
@@ -119,6 +121,8 @@ spec:
           value: "teastore-persistence"
         - name: OTEL_EXPORTER_OTLP_ENDPOINT
           value: "http://collector:4317"
+        - name: OTEL_TRACES_SAMPLER
+          value: "jaeger_remote"
         - name: OTEL_LOGS_EXPORTER
           value: "otlp"
 ---
@@ -154,6 +158,8 @@ spec:
           value: "teastore-auth"
         - name: OTEL_EXPORTER_OTLP_ENDPOINT
           value: "http://collector:4317"
+        - name: OTEL_TRACES_SAMPLER
+          value: "jaeger_remote"
         - name: OTEL_LOGS_EXPORTER
           value: "otlp"
 ---
@@ -189,6 +195,8 @@ spec:
           value: "teastore-image"
         - name: OTEL_EXPORTER_OTLP_ENDPOINT
           value: "http://collector:4317"
+        - name: OTEL_TRACES_SAMPLER
+          value: "jaeger_remote"
         - name: OTEL_LOGS_EXPORTER
           value: "otlp"
 ---
@@ -224,6 +232,8 @@ spec:
           value: "teastore-recommender"
         - name: OTEL_EXPORTER_OTLP_ENDPOINT
           value: "http://collector:4317"
+        - name: OTEL_TRACES_SAMPLER
+          value: "jaeger_remote"
         - name: OTEL_LOGS_EXPORTER
           value: "otlp"
 ---
@@ -257,6 +267,8 @@ spec:
           value: "teastore-registry"
         - name: OTEL_SERVICE_NAME
           value: "teastore-webui"
+        - name: OTEL_TRACES_SAMPLER
+          value: "jaeger_remote"
         - name: OTEL_EXPORTER_OTLP_ENDPOINT
           value: "http://collector:4317"
         - name: OTEL_LOGS_EXPORTER

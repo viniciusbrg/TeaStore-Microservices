@@ -32,6 +32,8 @@ spec:
               value: "teastore-app"
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               value: "http://collector:4317"
+            - name: OTEL_TRACES_SAMPLER
+              value: "jaeger_remote"
             - name: OTEL_LOGS_EXPORTER
               value: "otlp"
 
