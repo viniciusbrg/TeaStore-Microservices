@@ -5,6 +5,7 @@ LOADTEST_CLUSTER=$(aws eks update-kubeconfig --name loadtester-cluster | sed -e 
 
 kubectl config use-context $APP_CLUSTER
 
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 kubectl apply -f microservices/examples/kubernetes/otel-manifests/
 kubectl apply -f microservices/examples/kubernetes/teastore-ribbon-otel.yaml
 
