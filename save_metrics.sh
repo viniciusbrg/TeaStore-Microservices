@@ -7,7 +7,7 @@ INSTANCE_ID=$(aws ec2 describe-instances --filter Name=private-ip-address,Values
 aws cloudwatch get-metric-statistics --namespace AWS/EC2 --metric-name CPUUtilization \
  --dimensions Name=InstanceId,Value=$INSTANCE_ID \
  --statistics Average \
- --start-time $(date -d 'now -45 minutes' +"%Y-%m-%dT%H:%M:%S%z") \
+ --start-time $(date -d 'now -30 minutes' +"%Y-%m-%dT%H:%M:%S%z") \
  --end-time $(date +"%Y-%m-%dT%H:%M:%S%z") \
  --period 300 \
  --region us-east-1 \
@@ -16,7 +16,7 @@ aws cloudwatch get-metric-statistics --namespace AWS/EC2 --metric-name CPUUtiliz
 aws cloudwatch get-metric-statistics --namespace AWS/EC2 --metric-name NetworkIn \
  --dimensions Name=InstanceId,Value=$INSTANCE_ID \
  --statistics Average \
- --start-time $(date -d 'now -45 minutes' +"%Y-%m-%dT%H:%M:%S%z") \
+ --start-time $(date -d 'now -30 minutes' +"%Y-%m-%dT%H:%M:%S%z") \
  --end-time $(date +"%Y-%m-%dT%H:%M:%S%z") \
  --period 300 \
  --region us-east-1 \
@@ -25,7 +25,7 @@ aws cloudwatch get-metric-statistics --namespace AWS/EC2 --metric-name NetworkIn
 aws cloudwatch get-metric-statistics --namespace AWS/EC2 --metric-name NetworkOut \
  --dimensions Name=InstanceId,Value=$INSTANCE_ID \
  --statistics Average \
- --start-time $(date -d 'now -45 minutes' +"%Y-%m-%dT%H:%M:%S%z") \
+ --start-time $(date -d 'now -30 minutes' +"%Y-%m-%dT%H:%M:%S%z") \
  --end-time $(date +"%Y-%m-%dT%H:%M:%S%z") \
  --period 300 \
  --region us-east-1 \
