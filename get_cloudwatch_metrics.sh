@@ -5,8 +5,8 @@ LOADTEST_CLUSTER=$(aws eks update-kubeconfig --name loadtester-cluster | sed -e 
 
 kubectl config use-context $APP_CLUSTER
 
-kubectl get nodes -o wide | awk -v OFS='\t\t' '{print $6}' | tail -n +2 | xargs -l bash -c './save_metrics.sh app $1'
+kubectl get nodes -o wide | awk -v OFS='\t\t' '{print $6}' | tail -n +2 | xargs -l bash -c './save_metrics.sh app $0'
 
 kubectl config use-context $LOADTEST_CLUSTER
 
-kubectl get nodes -o wide | awk -v OFS='\t\t' '{print $6}' | tail -n +2 | xargs -l bash -c './save_metrics.sh load $1'
+kubectl get nodes -o wide | awk -v OFS='\t\t' '{print $6}' | tail -n +2 | xargs -l bash -c './save_metrics.sh load $0'
