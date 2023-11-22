@@ -22,7 +22,7 @@ data:
       base_duration = 40
       peak_duration = 80
       cycle_time = base_duration + peak_duration
-      n_cycles = 15
+      n_cycles = 30
       time_limit = cycle_time * n_cycles
       
       def get_cycle_stages(self, i):
