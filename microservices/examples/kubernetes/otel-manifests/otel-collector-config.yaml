@@ -5,29 +5,12 @@ metadata:
 data:
   config.yaml: |
     receivers:
-      kubeletstats:
-        collection_interval: 60s
-        auth_type: "serviceAccount"
-        endpoint: "${env:K8S_NODE_NAME}:10250"
-        insecure_skip_verify: true
-
       hostmetrics:
         root_path: /hostfs
-        collection_interval: 60s
+        collection_interval: 5s
         scrapers:
           load:
-          disk:
-          filesystem:
           memory:
-          network:
-          paging:
-    
-      mysql:
-        endpoint: teastore-db:3306
-        username: root
-        password: rootpassword
-        database: teadb
-        collection_interval: 60s
     
       otlp:
         protocols:
@@ -78,7 +61,7 @@ data:
     service:
       pipelines:
         metrics:
-          receivers: [otlp, mysql, kubeletstats, hostmetrics]
+          receivers: [hostmetrics]
           exporters: [prometheus]
         traces:
           receivers: [otlp]
