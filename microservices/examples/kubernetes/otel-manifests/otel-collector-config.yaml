@@ -7,7 +7,7 @@ data:
     receivers:
       hostmetrics:
         root_path: /hostfs
-        collection_interval: 5s
+        collection_interval: 60s
         scrapers:
           load:
           memory:
