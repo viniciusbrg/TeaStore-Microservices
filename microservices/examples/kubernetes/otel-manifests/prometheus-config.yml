@@ -5,7 +5,7 @@ metadata:
 data:
   config.yaml: |
     global:
-      scrape_interval: 15s
+      scrape_interval: 60s
       scrape_timeout: 10s
       evaluation_interval: 15s
     alerting:
