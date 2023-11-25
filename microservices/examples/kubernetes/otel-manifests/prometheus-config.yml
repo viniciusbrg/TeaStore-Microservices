@@ -6,7 +6,7 @@ data:
   config.yaml: |
     global:
       scrape_interval: 5s
-      scrape_timeout: 10s
+      scrape_timeout: 5s
       evaluation_interval: 15s
     alerting:
       alertmanagers:
